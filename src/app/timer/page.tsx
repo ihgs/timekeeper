@@ -19,6 +19,8 @@ export default function MyTimer() {
   const [data, setData] = useState<Milestone[]>([])
   const [show, setShow]  = useState<boolean>(false)
 
+  const graphSize = Math.min(window.innerHeight, window.innerWidth)
+
   useEffect(()=>{
     if(points){
         const tmpData = points.split(',').map((p,index)=>{
@@ -32,11 +34,11 @@ export default function MyTimer() {
   },[points])
   return (
     
-    <Stack sx={{paddingTop: 24}} direction={"column"} gap={6}  alignItems={"center"} >      
+    <Stack sx={{paddingTop: 12}} direction={"column"} gap={6}  alignItems={"center"} >      
       {
         show  ? 
           <>
-             <TimerChart actions={false} data={{table: data, timer: [{min}]}} width={400} height={400} />
+             <TimerChart actions={false} data={{table: data, timer: [{min}]}} width={graphSize*0.8} height={graphSize*0.8} />
           </>
           :  
           <div className="flex flex-row items-center">

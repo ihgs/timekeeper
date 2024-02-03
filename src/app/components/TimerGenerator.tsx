@@ -7,13 +7,17 @@ export default function TimerGenerator() {
 
     const maxSizeOfPoint = 5
 
-    const [min, setMin] = useState<string>("20")
-    const [points, setPoints] = useState<number[]>([])
+    const [min, setMin] = useState<number>(20)
+    const [points, setPoints] = useState<number[]>([10, 17])
+    const [minError, setMinError] = useState<boolean>(false)
 
     const openTimer = () => {
+        if(minError){
+            return
+        }
         const query = new URLSearchParams()
-        query.set("min", min)
-        const rangeArray = [0, ...points, parseInt(min)]
+        query.set("min", `${min}`)
+        const rangeArray = [0, ...points, min]
         const tmp = []
         for (let i = 0; i < rangeArray.length - 1; i++) {
             tmp.push(rangeArray[i + 1] - rangeArray[i])
@@ -23,14 +27,21 @@ export default function TimerGenerator() {
     }
 
     const changeTimer = (value: string) => {
-        setMin(value)
+        setMinError(false)
+        const numValue = Number(value)
+        if(isNaN(numValue)){
+            setMinError(true)
+        }else {
+            setPoints(points.filter(p=>p<=numValue))
+            setMin(numValue)
+        }
     }
     const handleChange = (event: Event, newValue: number | number[]) => {
         setPoints(newValue as number[]);
     };
 
     const addPoint = () => {
-        const newPoints = [...points, parseInt(min)]
+        const newPoints = [...points, min]
         setPoints(newPoints)
     }
 
@@ -38,40 +49,45 @@ export default function TimerGenerator() {
         setPoints(points.slice(0, points.length - 1))
     }
 
-    const valuetext = (value: number) => {
-        return `${value}`
-    }
-
-    useEffect(() => {
-
-    }, [])
     return (
-        <Stack direction={"row"} gap={3} alignItems={"center"}>
-            <Button onClick={openTimer} size="small" variant="contained">Open</Button>
-            <Input value={min}
-                onChange={(e) => { changeTimer(e.target.value) }}
-                placeholder="タイマー"
-                sx={{ width: 60, textAlign: "right" }}
-                inputProps={{ style: { textAlign: 'right' } }}
-                endAdornment={<InputAdornment position="end">分</InputAdornment>}
+        <Stack direction={"row"} gap={3} alignItems={"center"} 
+            sx={{
+                    backgroundColor: "white",
+                    paddingTop: 5,
+                    paddingBottom: 2,
+                    paddingX: 3,
+                    borderRadius: 2
+                }}
             >
-            </Input>
-            <ButtonGroup >
-                <Button variant="contained" size="small" onClick={addPoint} disabled={points.length >= maxSizeOfPoint}>+</Button>
-                <Button variant="contained" size="small" onClick={popPoint} disabled={points.length < 1}>-</Button>
-            </ButtonGroup>
-            <Box width={300} alignItems={"center"}>
+            <Button onClick={openTimer} size="small" variant="contained" disabled={minError} sx={{textTransform: 'none'}}>Open Timer</Button>
+            <Stack direction={"row"} gap={1} alignItems={"center"} >
+                <Input 
+                    defaultValue={20}
+                    error={minError}
+                    onBlur={(e) => { changeTimer(e.target.value) }}
+                    sx={{ width: 40 }}
+                    inputProps={{ style: { textAlign: 'center' } }}
+                    
+                >
+                </Input>
+                <div >分</div>
+            </Stack>
+
+            <Box width={300}>
                 <Slider
                     getAriaLabel={() => 'Milestone'}
                     value={points}
                     onChange={handleChange}
                     valueLabelDisplay="on"
-                    getAriaValueText={valuetext}
                     track={false}
                     min={0}
-                    max={parseInt(min)}
+                    max={min}
                 />
             </Box>
+            <ButtonGroup sx={{paddingLeft:1}}>
+                <Button variant="contained" size="small" onClick={addPoint} disabled={points.length >= maxSizeOfPoint}>+</Button>
+                <Button variant="contained" size="small" onClick={popPoint} disabled={points.length < 1}>-</Button>
+            </ButtonGroup>
         </Stack>
 
 
