@@ -1,13 +1,16 @@
 "use client"
 import { useEffect, useState } from "react";
 import TimerGenerator from "./components/TimerGenerator";
+import { Box, Container, Stack } from "@mui/material";
 
 
 export default function Home() {
   return (
 
-    <main className="flex min-h-screen flex-col items-center  p-24">
-      <TimerGenerator />
-    </main>
+    <Stack sx={{paddingTop: 24}} direction={"column"} gap={6}  alignItems={"center"} >
+    <TimerGenerator />
+        <TimerGenerator />
+    </Stack>
+
   );
 }

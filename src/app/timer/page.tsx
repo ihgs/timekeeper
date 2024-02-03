@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from 'next/navigation'
 import { TimerChart } from "../vega/Timer";
+import { Button, Stack } from "@mui/material";
 
 
 interface Milestone {
@@ -31,8 +32,7 @@ export default function MyTimer() {
   },[points])
   return (
     
-    <main className="flex min-h-screen flex-col items-center  p-24">
-      
+    <Stack sx={{paddingTop: 24}} direction={"column"} gap={6}  alignItems={"center"} >      
       {
         show  ? 
           <>
@@ -40,10 +40,10 @@ export default function MyTimer() {
           </>
           :  
           <div className="flex flex-row items-center">
-            <button type="button" className="btn btn-primary"  onClick={()=>setShow(true)}>Start ({min} 分)</button>
+            <Button variant="contained" onClick={()=>setShow(true)}>Start ({min} 分)</Button>
           </div>
       }
       
-    </main>
+    </Stack>
   );
 }
