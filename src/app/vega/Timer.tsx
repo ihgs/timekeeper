@@ -58,7 +58,7 @@ const spec : VisualizationSpec={
       },
       {
         "name":"timer",
-        "values":[{"min": 50}]
+        "values":[]
       }
     ],
     "scales": [
@@ -120,8 +120,10 @@ const spec : VisualizationSpec={
             "align": {"value": "center"},
             "baseline": {"value": "middle"},
             "text": {"signal": "(minutes - datum.sum) == 0 ? minutes : (minutes - datum.sum)"},
-            "fontSize": {"signal": "fontSize"}
             
+          },
+          "update": {
+            "fontSize": {"signal": "timer < datum.endAngle ? fontSize: fontSize/2"}
           }
         }
       }
