@@ -14,19 +14,21 @@ export default function MyTimer() {
   const searchParams = useSearchParams()
  
   const min = searchParams.get('min')
+  const points = searchParams.get('points')
   const [data, setData] = useState<Milestone[]>([])
   const [show, setShow]  = useState<boolean>(false)
 
   useEffect(()=>{
-    setData([
-      {id: 1, value: 10},
-      {id: 2, value: 3},
-      {id: 3, value: 3},
-      {id: 4, value: 3},
-      {id: 5, value: 3},
-      {id: 6, value: 3},
-    ])
-  },[])
+    if(points){
+        const tmpData = points.split(',').map((p,index)=>{
+            return {
+                id: index,
+                value: parseInt(p)
+            }
+        })
+        setData(tmpData)    
+    }
+  },[points])
   return (
     
     <main className="flex min-h-screen flex-col items-center  p-24">
