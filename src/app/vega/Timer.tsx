@@ -46,7 +46,7 @@ const spec : VisualizationSpec={
         "on": [
           {
             "events": {"signal": "baseTimer"},
-            "update": "floor(baseTimer/1000/60)+':'+pad(floor((baseTimer/1000))%60,2, '0')"
+            "update": "baseTimer >= 0 ? floor(baseTimer/1000/60)+':'+pad(floor((baseTimer/1000))%60,2, '0', 'left'): floor(-1*baseTimer/1000/60)+':'+pad(floor((-1*baseTimer/1000))%60,2, '0', 'left')"
           }
         ]
       }
@@ -159,6 +159,11 @@ const spec : VisualizationSpec={
           },
           "update": {
             "text": {"signal": "timerStr"},
+            "fill": 
+            [
+              {"test": "baseTimer >= 0", "value": "black"},
+              {"value": "red"}
+            ]
           }
         }
       }
