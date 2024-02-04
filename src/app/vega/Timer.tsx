@@ -7,17 +7,28 @@ const spec : VisualizationSpec={
     "description": "Presentaion timer",
     "autosize": "none",
     "signals": [
-      {"name": "minutes", "update": "data('timer')[0].min"},
+      {"name": "minutes", "update": "data('timer')[0] ? data('timer')[0].min: 0"},
+      // {"name": "minutes", "update": "data('timer')[0].min"},
       {"name": "innerRadius", "init": "width/4"},
       {"name": "startDate", "init": "now()"},
-      {"name": "endDate", "init": "now()+minutes*60*1000"},
+      {"name": "endDate", "update": "startDate+minutes*60*1000"},
+      {
+        "name": "baseTimer",
+        "init": "endDate - startDate",
+        "on": [
+          {
+            "events": {"type": "timer", "throttle": 1000},
+            "update": "(endDate - now())"
+          }
+        ]     
+      },
       {
         "name": "timer",
         "init": "0",
         "on": [
           {
-            "events": {"type": "timer", "throttle": 1000},
-            "update": "(now()- startDate)/(endDate-startDate)*6.29"
+            "events": {"signal": "baseTimer"},
+            "update": "(endDate - startDate - baseTimer)/(endDate - startDate)*6.29"
           }
         ]
       },
@@ -28,6 +39,16 @@ const spec : VisualizationSpec={
       {
         "name": "fontPadding",
         "init": "5"
+      },
+      {
+        "name": "timerStr",
+        "init": "",
+        "on": [
+          {
+            "events": {"signal": "baseTimer"},
+            "update": "floor(baseTimer/1000/60)+':'+pad(floor((baseTimer/1000))%60,2, '0')"
+          }
+        ]
       }
     ],
     "data": [
@@ -123,6 +144,21 @@ const spec : VisualizationSpec={
           },
           "update": {
             "fontSize": {"signal": "timer < datum.endAngle ? fontSize: fontSize/2"}
+          }
+        }
+      },
+      {
+        "type": "text",
+        "encode": {
+          "enter": {
+            "x": {"signal": "width/2"},
+            "y": {"signal": "height /2"},
+            "align": {"value": "center"},
+            "baseline": {"value": "middle"},
+            "fontSize": {"signal": "width/ 8"}
+          },
+          "update": {
+            "text": {"signal": "timerStr"},
           }
         }
       }

@@ -9,7 +9,7 @@ export default function Home() {
   const [timers, setTimers] = useState<number[]>([1])
 
   const addTimer = () => {
-    setTimers([...timers, timers.length])
+    setTimers([...timers, timers.length+1])
   }
 
   const popTimer = () => {
