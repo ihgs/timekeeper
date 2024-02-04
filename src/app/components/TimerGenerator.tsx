@@ -72,7 +72,7 @@ export default function TimerGenerator() {
                     
                 >
                 </Input>
-                <div >分</div>
+                <div >min</div>
             </Stack>
 
             <Box width={300}>
