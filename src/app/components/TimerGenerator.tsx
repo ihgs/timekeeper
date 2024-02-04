@@ -1,9 +1,10 @@
 "use client"
-import { Box, Button, ButtonGroup, Input, InputAdornment, Slider, Stack } from "@mui/material";
-import { useEffect, useState } from "react";
-
+import { Box, Button, ButtonGroup, Input, Slider, Stack } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function TimerGenerator() {
+    const router = useRouter()
 
     const maxSizeOfPoint = 5
 
@@ -23,7 +24,8 @@ export default function TimerGenerator() {
             tmp.push(rangeArray[i + 1] - rangeArray[i])
         }
         query.set("points", tmp.join(","))
-        window.open(`/timer?${query.toString()}`, "_blank")
+        const basePath = process.env.NEXT_PUBLIC_BASEPATH
+        window.open(`${basePath}/timer?${query.toString()}`, "_blank")
     }
 
     const changeTimer = (value: string) => {
@@ -89,7 +91,5 @@ export default function TimerGenerator() {
                 <Button variant="contained" size="small" onClick={popPoint} disabled={points.length < 1}>-</Button>
             </ButtonGroup>
         </Stack>
-
-
     );
 }

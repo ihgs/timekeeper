@@ -42,9 +42,7 @@ export default function MyTimer() {
              <TimerChart actions={false} data={{table: data, timer: [{min}]}} width={graphSize*0.8} height={graphSize*0.8} />
           </>
           :  
-          <div className="flex flex-row items-center">
-            <Button variant="contained" onClick={()=>setShow(true)}>Start ({min} 分)</Button>
-          </div>
+          <Button variant="contained" onClick={()=>setShow(true)}>Start ({min} 分)</Button>
       }
       
     </Stack>

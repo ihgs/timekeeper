@@ -44,7 +44,6 @@ const spec : VisualizationSpec={
                 "ops": ["sum"],
                 "fields": ["value"],
                 "as": ["sum"]
-
             },
   
           {

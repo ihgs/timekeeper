@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react";
 import TimerGenerator from "./components/TimerGenerator";
-import { Stack, Divider, ButtonGroup, Button, Typography, Container } from "@mui/material";
+import { Stack, ButtonGroup, Button, Typography } from "@mui/material";
 
 export default function Home() {
 
@@ -26,14 +26,11 @@ export default function Home() {
           {timers.map((timer) => {
             return (<TimerGenerator key={`timer${timer}`} />)
           })}
-
         </Stack>
-
         <ButtonGroup >
           <Button variant="contained" size="large" onClick={addTimer} disabled={timers.length >= maxSizeOfPoint}>+</Button>
           <Button variant="contained" size="large" onClick={popTimer} disabled={timers.length < 1}>-</Button>
         </ButtonGroup>
-
       </div>
     </Stack>
 
