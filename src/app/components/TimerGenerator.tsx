@@ -1,5 +1,5 @@
 "use client"
-import { Box, Button, ButtonGroup, Input, Slider, Stack } from "@mui/material";
+import { Box, Button, ButtonGroup, Divider, Input, Slider, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -14,7 +14,7 @@ export default function TimerGenerator() {
     const [title, setTitle] = useState<string>('')
 
     const openTimer = () => {
-        if(minError){
+        if (minError) {
             return
         }
         const query = new URLSearchParams()
@@ -33,17 +33,17 @@ export default function TimerGenerator() {
     const changeTimer = (value: string) => {
         setMinError(false)
         const numValue = Number(value)
-        if(isNaN(numValue)){
+        if (isNaN(numValue)) {
             setMinError(true)
-        }else {
-            setPoints(points.filter(p=>p<=numValue))
+        } else {
+            setPoints(points.filter(p => p <= numValue))
             setMin(numValue)
         }
     }
 
     const changeTitle = (value: string) => {
         setTitle(value)
-    
+
     }
     const handleChange = (event: Event, newValue: number | number[]) => {
         setPoints(newValue as number[]);
@@ -59,51 +59,66 @@ export default function TimerGenerator() {
     }
 
     return (
-        <Stack direction={"column"} 
+        <Stack direction={"column"}
             sx={{
-                    backgroundColor: "white",
-                    paddingBottom: 2,
-                    paddingX: 3,
-                    borderRadius: 2
-                }}
-            >
-            <Input 
-                placeholder="session title"
-                sx={{marginY: 1, width:200}}
-                onChange={(e)=> { changeTitle(e.target.value)}}
-                >
-            </Input>
+                backgroundColor: "white",
+                paddingBottom: 2,
+                paddingTop: 1,
+                paddingLeft: 3,
+                paddingRight: 6,
+                borderRadius: 2
+            }}
+        >
             <Stack direction={"row"} gap={3} alignItems={"center"} >
-            <Button onClick={openTimer} size="small" variant="contained" disabled={minError} sx={{textTransform: 'none'}}>Open Timer</Button>
-            <Stack direction={"row"} gap={1} alignItems={"center"} >
-                <Input 
-                    defaultValue={20}
-                    error={minError}
-                    onBlur={(e) => { changeTimer(e.target.value) }}
-                    sx={{ width: 40 }}
-                    inputProps={{ style: { textAlign: 'center' } }}
-                    
+                <Input
+                    placeholder="session title"
+                    sx={{ marginY: 1, width: 200 }}
+                    onChange={(e) => { changeTitle(e.target.value) }}
                 >
                 </Input>
-                <div >min</div>
+                <Stack direction={"row"} gap={1} alignItems={"center"} >
+                    <Input
+                        defaultValue={20}
+                        error={minError}
+                        onBlur={(e) => { changeTimer(e.target.value) }}
+                        sx={{ width: 40 }}
+                        inputProps={{ style: { textAlign: 'center' } }}
+
+                    >
+                    </Input>
+                    <div >min</div>
+                </Stack>
+                <Button onClick={openTimer} size="small" variant="contained" disabled={minError} 
+                sx={{ textTransform: 'none', marginTop: 4 }}>
+                Open Timer
+            </Button>
+            </Stack>
+            <Divider sx={{paddingY:1}}/>
+            <Stack direction={"column"} sx={{ marginTop: 1 }}>
+            <Typography sx={{textDecoration: 'underline'}} >Guide</Typography>
+            <Stack direction={"row"} gap={3} alignItems={"center"} sx={{ marginTop: 6 }}>
+                
+
+                <Box width={300}>
+                    <Slider
+                        getAriaLabel={() => 'Milestone'}
+                        value={points}
+                        onChange={handleChange}
+                        valueLabelDisplay="on"
+                        track={false}
+                        min={0}
+                        max={min}
+                    />
+                </Box>
+                <ButtonGroup sx={{ paddingLeft: 1 }}>
+                    <Button variant="contained" size="small" onClick={addPoint} disabled={points.length >= maxSizeOfPoint}>+</Button>
+                    <Button variant="contained" size="small" onClick={popPoint} disabled={points.length < 1}>-</Button>
+                </ButtonGroup>
             </Stack>
 
-            <Box width={300}>
-                <Slider
-                    getAriaLabel={() => 'Milestone'}
-                    value={points}
-                    onChange={handleChange}
-                    valueLabelDisplay="on"
-                    track={false}
-                    min={0}
-                    max={min}
-                />
-            </Box>
-            <ButtonGroup sx={{paddingLeft:1}}>
-                <Button variant="contained" size="small" onClick={addPoint} disabled={points.length >= maxSizeOfPoint}>+</Button>
-                <Button variant="contained" size="small" onClick={popPoint} disabled={points.length < 1}>-</Button>
-            </ButtonGroup>
+
             </Stack>
+
         </Stack>
     );
 }
