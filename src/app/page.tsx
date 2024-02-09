@@ -1,7 +1,8 @@
 "use client"
 import { useState } from "react";
 import TimerGenerator from "./components/TimerGenerator";
-import { Stack, ButtonGroup, Button, Typography } from "@mui/material";
+import { Stack, ButtonGroup, Button, Typography, Container } from "@mui/material";
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 export default function Home() {
 
@@ -9,11 +10,16 @@ export default function Home() {
   const [timers, setTimers] = useState<number[]>([1])
 
   const addTimer = () => {
-    setTimers([...timers, timers.length+1])
+    setTimers([...timers, timers[timers.length-1]+1])
   }
 
-  const popTimer = () => {
-    setTimers(timers.slice(0, timers.length - 1))
+
+
+  const deleteItem = (timer: number) => {
+    if(window.confirm("Do you delete this item?")){
+      setTimers(timers.filter(n=>n!=timer))
+
+    }
   }
   return (
 
@@ -24,12 +30,19 @@ export default function Home() {
       <div>
         <Stack sx={{ paddingY: 3 }} direction={"column"} gap={3} alignItems={"center"} >
           {timers.map((timer) => {
-            return (<TimerGenerator key={`timer${timer}`} />)
+            return (
+              <div style={{position: 'relative'}} key={`timer${timer}`}>
+                <TimerGenerator  />
+                <HighlightOffIcon sx={{position: 'absolute', top: 0, right:0, zIndex:10}} onClick={()=>deleteItem(timer)}/>
+              </div>
+
+            )
           })}
         </Stack>
         <ButtonGroup >
-          <Button variant="contained" size="large" onClick={addTimer} disabled={timers.length >= maxSizeOfPoint}>+</Button>
-          <Button variant="contained" size="large" onClick={popTimer} disabled={timers.length < 1}>-</Button>
+          <Button variant="contained" size="large" onClick={addTimer} disabled={timers.length >= maxSizeOfPoint} sx={{textTransform: 'none'}}>
+            Add a session
+          </Button>
         </ButtonGroup>
       </div>
     </Stack>

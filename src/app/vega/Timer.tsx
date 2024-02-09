@@ -17,7 +17,7 @@ const spec : VisualizationSpec={
         "init": "endDate - startDate",
         "on": [
           {
-            "events": {"type": "timer", "throttle": 1000},
+            "events": {"type": "timer", "throttle": 200},
             "update": "(endDate - now())"
           }
         ]     

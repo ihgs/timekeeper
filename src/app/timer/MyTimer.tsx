@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from 'next/navigation'
 import { TimerChart } from "../vega/Timer";
-import { Button, Stack } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 
 
 interface Milestone {
@@ -16,6 +16,7 @@ export default function MyTimer() {
  
   const min = searchParams.get('min')
   const points = searchParams.get('points')
+  const title = searchParams.get('title')
   const [data, setData] = useState<Milestone[]>([])
   const [show, setShow]  = useState<boolean>(false)
   const [graphSize, setGraphSize] = useState<number>(300)
@@ -35,7 +36,10 @@ export default function MyTimer() {
   },[points])
   return (
     
-    <Stack sx={{paddingTop: 12}} direction={"column"} gap={6}  alignItems={"center"} >      
+    <Stack sx={{paddingTop: 6}} direction={"column"} gap={3}  alignItems={"center"} >
+     <Typography variant="h3" gutterBottom>
+        {title}
+      </Typography>
       {
         show  ? 
           <>
