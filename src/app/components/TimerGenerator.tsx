@@ -89,7 +89,7 @@ export default function TimerGenerator() {
                     <div >min</div>
                 </Stack>
                 <Button onClick={openTimer} size="small" variant="contained" disabled={minError} 
-                sx={{ textTransform: 'none', marginTop: 4 }}>
+                sx={{ textTransform: 'none', marginTop: 4 }} color="primary">
                 Open Timer
             </Button>
             </Stack>
@@ -111,8 +111,8 @@ export default function TimerGenerator() {
                     />
                 </Box>
                 <ButtonGroup sx={{ paddingLeft: 1 }}>
-                    <Button variant="contained" size="small" onClick={addPoint} disabled={points.length >= maxSizeOfPoint}>+</Button>
-                    <Button variant="contained" size="small" onClick={popPoint} disabled={points.length < 1}>-</Button>
+                    <Button variant="contained" size="small" color="primary" onClick={addPoint} disabled={points.length >= maxSizeOfPoint}>+</Button>
+                    <Button variant="contained" size="small" color="primary" onClick={popPoint} disabled={points.length < 1}>-</Button>
                 </ButtonGroup>
             </Stack>
 
