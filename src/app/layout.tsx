@@ -5,9 +5,20 @@ import { GoogleAnalytics } from '@next/third-parties/google'
 
 const inter = Inter({ subsets: ["latin"] });
 
+const title = "Time Keeper"
+const description = "Time keeper is a graphical timer for event with multiple sessions."
 export const metadata: Metadata = {
-  title: "Time Keeper",
-  description: "Time keeper for presentations",
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    siteName: title,
+    url: 'https://ihgs.github.io/timekeeper/',
+    locale: 'ja_JP',
+    type: 'website'
+  }
+
 };
 
 export default function RootLayout({
