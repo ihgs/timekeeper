@@ -27,7 +27,7 @@ export default function MyTimer() {
     setGraphSize(Math.min(window.innerHeight, window.innerWidth))
 
     if (points) {
-      const tmpData = points.split(',').map((p, index) => {
+      const tmpData = points.split('-').map((p, index) => {
         return {
           id: index,
           value: parseInt(p)

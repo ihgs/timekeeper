@@ -25,7 +25,7 @@ export default function TimerGenerator() {
         for (let i = 0; i < rangeArray.length - 1; i++) {
             tmp.push(rangeArray[i + 1] - rangeArray[i])
         }
-        query.set("points", tmp.join(","))
+        query.set("points", tmp.join("-"))
         const basePath = process.env.NEXT_PUBLIC_BASEPATH
         window.open(`${basePath}/timer?${query.toString()}`, "_blank")
     }

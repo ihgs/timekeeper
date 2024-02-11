@@ -86,7 +86,12 @@ const spec : VisualizationSpec={
               "y": {"signal": "0"},
               "x": {"signal": "width/2"},
               "text": {"signal": "timerStr"},
-              "fontSize": {"signal": "timerFontSize"}
+              "fontSize": {"signal": "timerFontSize"},
+              "fill": 
+                [
+                  {"test": "baseTimer >= 0", "value": "black"},
+                  {"value": "red"}
+                ]
             }
           }
         }
