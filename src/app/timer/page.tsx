@@ -1,4 +1,3 @@
-"use client"
 import MyTimer from "./MyTimer";
 
 export const dynamic = 'force-static'
