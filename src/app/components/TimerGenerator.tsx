@@ -69,7 +69,7 @@ export default function TimerGenerator() {
                 borderRadius: 2
             }}
         >
-            <Stack direction={"row"} gap={3} alignItems={"center"} >
+            <Stack direction={{xs: "column", sm: "row"}} gap={3} alignItems={"center"} >
                 <Input
                     placeholder="session title"
                     sx={{ marginY: 1, width: 200 }}
@@ -96,10 +96,10 @@ export default function TimerGenerator() {
             <Divider sx={{paddingY:1}}/>
             <Stack direction={"column"} sx={{ marginTop: 1 }}>
             <Typography sx={{textDecoration: 'underline'}} >Guide</Typography>
-            <Stack direction={"row"} gap={3} alignItems={"center"} sx={{ marginTop: 6 }}>
+            <Stack direction={{xs: "column", sm: "row"}} gap={3} alignItems={"center"} sx={{ marginTop: 6 }}>
                 
 
-                <Box width={300}>
+                <Box width={{xs: 250, sm: 300}}>
                     <Slider
                         getAriaLabel={() => 'Milestone'}
                         value={points}
