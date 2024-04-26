@@ -24,11 +24,7 @@ export default function MyTimer() {
   const [show, setShow] = useState<boolean>(false)
   const [showBar, setShowBar] = useState<boolean>(false)
   const [graphSize, setGraphSize] = useState<number>(300)
-  const [finished, setFinished] = useState<boolean>(true)
-
-
-
-  // let finished = true;
+  const [alarmOn, setAlarmOn] = useState<boolean>(false)
 
   useEffect(() => {
     setGraphSize(Math.min(window.innerHeight, window.innerWidth))
@@ -46,13 +42,13 @@ export default function MyTimer() {
 
 
   const alertListeners = {baseTimer: (name:string, value:any)=>{
-    if (!finished && value<0){
+    if (alarmOn && value<0){
       const synth = new Tone.Synth().toDestination();
       const seq = new Tone.Sequence((time, note)=>{
         synth.triggerAttackRelease(note, '16n', time)
       }, ["B5", "B5"]).start();
       seq.loop = false;
-      setFinished(true)
+      setAlarmOn(false)
       Tone.Transport.start()
     }
   }}
@@ -70,7 +66,7 @@ export default function MyTimer() {
             <Button variant="contained" onClick={() => setShowBar(true)}>Start bar timer ({min} 分)</Button>
           </Stack>
           <FormGroup>
-            <FormControlLabel control={<Switch onChange={()=>{setFinished(false)}}/>} label="Alarm" />
+            <FormControlLabel control={<Switch onChange={()=>{setAlarmOn(true)}}/>} label="Alarm" />
           </FormGroup>
         </>
 
